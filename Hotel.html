@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+<meta charset="UTF-8"> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+<title>Hotel Menu</title> 
+<link rel="stylesheet" href="Hotel.css"> 
+<script> const menuItems = [ { name: 'Grilled Salmon', price: 20 }, 
+{ name: 'Caesar Salad', price: 10 }, 
+{ name: 'Margherita Pizza', price: 15 }, 
+{ name: 'Beef Burger', price: 12 }, 
+{ name: 'Spaghetti Carbonara', price: 18 }, 
+{ name: 'Chicken Alfredo', price: 17 }, 
+{ name: 'Tiramisu', price: 8 }, 
+{ name: 'French Onion Soup', price: 9 }, 
+{ name: 'Lobster Bisque', price: 25 }, 
+{ name: 'Filet Mignon', price: 30 } ]; 
+   function addItem(item){
+   const receipt = document.getElementById('receipt'); 
+   const total = document.getElementById('total'); 
+   const currentTotal = parseFloat(total.innerText.replace('Total: $', '')); 
+   const newTotal = currentTotal + item.price; 
+   const itemElement = document.createElement('div'); 
+   itemElement.className = 'receipt-item'; 
+   itemElement.innerText = `${item.name} - $${item.price}`; 
+   receipt.appendChild(itemElement); 
+   total.innerText = `Total: $${newTotal.toFixed(2)}`; } 
+   function generateReceipt() { 
+   const receiptContainer = document.getElementById('receipt-container'); 
+   const date = new Date(); 
+   const dateString = date.toLocaleString(); 
+   const dateElement = document.createElement('div'); 
+   dateElement.className = 'receipt-date'; 
+   dateElement.innerText = `Date: ${dateString}`; 
+   receiptContainer.appendChild(dateElement); 
+   const hotelNameElement = document.createElement('div'); 
+   hotelNameElement.className = 'receipt-hotel'; 
+   hotelNameElement.innerText = 'Hotel Name: Grand Hotel'; 
+   receiptContainer.appendChild(hotelNameElement); 
+   const receipt = document.getElementById('receipt'); 
+   receiptContainer.appendChild(receipt); 
+   const total = document.getElementById('total'); 
+   receiptContainer.appendChild(total); 
+   receiptContainer.style.display = 'block'; } 
+  </script>
+ </head>
+<body> 
+    <!-- Navigation Bar --> 
+	<nav class="navbar"> 
+	<div class="logo">Grand Hotel</div> 
+	   <ul class="nav-links"> 
+	   <li><a href="home.html">Home</a></li> 
+	   <li><a href="about.html">About</a></li> 
+	   <li><a href="contact.html">Contact</a></li> 
+	   </ul> 
+	</nav> 
+	<!-- Menu Items --> 
+	<div class="menu-container"> 
+	<h2>Choose Your Meal</h2> 
+	<div class="menu-items"> 
+	<button class="menu-button" onclick="addItem(menuItems[0])" style="background-image: url('images/grilled_salmon.jpg');">Grilled Salmon</button> 
+	<button class="menu-button" onclick="addItem(menuItems[1])" style="background-image: url('images/caesar_salad.jpg');">Caesar Salad</button> 
+	<button class="menu-button" onclick="addItem(menuItems[2])" style="background-image: url('images/margherita_pizza.jpg');">Margherita Pizza</button> 
+	<button class="menu-button" onclick="addItem(menuItems[3])" style="background-image: url('images/beef_burger.jpg');">Beef Burger</button> 
+	<button class="menu-button" onclick="addItem(menuItems[4])" style="background-image: url('images/spaghetti_carbonara.jpg');">Spaghetti Carbonara</button> 
+	<button class="menu-button" onclick="addItem(menuItems[5])" style="background-image: url('images/chicken_alfredo.jpg');">Chicken Alfredo</button> 
+	<button class="menu-button" onclick="addItem(menuItems[6])" style="background-image: url('images/tiramisu.jpg');">Tiramisu</button> 
+	<button class="menu-button" onclick="addItem(menuItems[7])" style="background-image: url('images/french_onion_soup.jpg');">French Onion Soup</button> 
+	<button class="menu-button" onclick="addItem(menuItems[8])" style="background-image: url('images/lobster_bisque.jpg');">Lobster Bisque</button> 
+	<button class="menu-button" onclick="addItem(menuItems[9])" style="background-image: url('images/filet_mignon.jpg');">Filet Mignon</button> 
+	    </div> 
+		<button class="generate-receipt-button" onclick="generateReceipt()">Generate Receipt</button> 
+		</div> 
+<!-- Receipt --> 
+    <div id="receipt-container" class="receipt-container" style="display: none;"> 
+	<h2>Receipt</h2> 
+	<div id="receipt" class="receipt"></div> 
+	<div id="total" class="receipt-total">Total: $0.00</div> 
+	</div> 
+	<!-- Footer --> 
+	<footer> 
+	<p>© 2024 Grand Hotel. All rights reserved.</p> 
+	</footer>
+</body>
+</html>

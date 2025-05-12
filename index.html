@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Menu</title>
+    <link rel="stylesheet" href="Hotel Menu.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">Star Light Hotel</div>
+        <ul class="nav-links">
+            <li><a href="Hotel Menu.html">Home</a></li>
+            <li><a href="Hotel About Us.html">About Us</a></li>
+            <li><a href="Hotel Contact Us.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h1>Hotel Menu</h1>
+        <div class="menu">
+            <button class="menu-item" onclick="selectItem('Caesar Salad', 250)">
+                <img src="C:\Users\JOHN MWAKIA\OneDrive\One Drive\OneDrive\Desktop\Hotel Menu\Margherita Pizza.png" alt="Margherita Pizza.png">
+                <span>Caesar Salad - 250Sh</span>
+            </button>
+            <button class="menu-item" onclick="selectItem('Fish and Chips', 340)">
+                <img src="C:\Users\JOHN MWAKIA\OneDrive\One Drive\OneDrive\Desktop\Hotel Menu\Fish and Chips (1).png" alt="Fish and Chips">
+                <span>Fish and Chips - 340Sh</span>
+            </button>
+            <button class="menu-item" onclick="selectItem('Fish and Chips', 200)">
+                <img src="C:\Users\JOHN MWAKIA\OneDrive\One Drive\OneDrive\Desktop\Hotel Menu\Fish and Chips.png" alt="Fish and Chips">
+                <span>Fish and Chips - 200Sh</span>
+            </button>
+			<button class="menu-item" onclick="selectItem('Caesar Salad', 250)">
+                <img src="C:\Users\JOHN MWAKIA\OneDrive\One Drive\OneDrive\Desktop\Hotel Menu\Margherita Pizza.png" alt="Margherita Pizza.png">
+                <span>Caesar Salad - 250Sh</span>
+            </button>
+            <button class="menu-item" onclick="selectItem('Fish and Chips', 340)">
+                <img src="C:\Users\JOHN MWAKIA\OneDrive\One Drive\OneDrive\Desktop\Hotel Menu\Fish and Chips (1).png" alt="Fish and Chips">
+                <span>Fish and Chips - 340Sh</span>
+            </button>
+            <button class="menu-item" onclick="selectItem('Fish and Chips', 200)">
+                <img src="C:\Users\JOHN MWAKIA\OneDrive\One Drive\OneDrive\Desktop\Hotel Menu\Fish and Chips.png" alt="Fish and Chips">
+                <span>Fish and Chips - 200Sh</span>
+            </button>
+			 <button class="menu-item" onclick="selectItem('Fish and Chips', 340)">
+                <img src="C:\Users\JOHN MWAKIA\OneDrive\One Drive\OneDrive\Desktop\Hotel Menu\Fish and Chips (1).png" alt="Fish and Chips">
+                <span>Fish and Chips - 340Sh</span>
+            </button>
+            <button class="menu-item" onclick="selectItem('Fish and Chips', 200)">
+                <img src="C:\Users\JOHN MWAKIA\OneDrive\One Drive\OneDrive\Desktop\Hotel Menu\Fish and Chips.png" alt="Fish and Chips">
+                <span>Fish and Chips - 200Sh</span>
+            </button>
+        </div>
+
+        <div class="selected-items">
+            <h2>Selected Items</h2>
+            <ul id="itemList"></ul>
+            <strong>Total: <span id="total">0</span> Sh</strong>
+        </div>
+
+        <div class="buttons">
+            <button onclick="generateReceipt()">Generate Receipt</button>
+            <button onclick="resetSelection()">Reset</button>
+            <button onclick="removeLastItem()">Backspace</button>
+            <button onclick="previousSelection()">Previous</button>
+            <button onclick="nextSelection()">Next</button>
+            <button onclick="printReceipt()">Print</button>
+        </div>
+        
+        <div class="receipt" id="receipt" style="display: none;"></div>
+    </div>
+
+    <script>
+        let selectedItems = [];
+        let total = 0;
+
+        function selectItem(item, price) {
+            selectedItems.push({ item, price });
+            total += price;
+            updateSelection();
+        }
+
+        function updateSelection() {
+            const itemList = document.getElementById('itemList');
+            itemList.innerHTML = '';
+            selectedItems.forEach((selected) => {
+                const li = document.createElement('li');
+                li.textContent = `${selected.item} - ${selected.price} Sh`;
+                itemList.appendChild(li);
+            });
+            document.getElementById('total').textContent = total;
+        }
+
+        function removeLastItem() {
+            if (selectedItems.length > 0) {
+                const lastItem = selectedItems.pop();
+                total -= lastItem.price;
+                updateSelection();
+            }
+        }
+
+        function generateReceipt() {
+            const receipt = document.getElementById('receipt');
+            const date = new Date();
+            const receiptContent = `
+                <h2>Receipt</h2>
+                <p><strong>Hotel Name:</strong> Star Light Hotel</p>
+                <p><strong>Address:</strong> Kenya, Nairobi</p>
+                <p><strong>Phone:</strong> 070000000</p>
+                <p><strong>Email:</strong> starlighthotel@gmail.com</p>
+                <p><strong>Cashier:</strong> John Smith</p>
+                <p><strong>Date:</strong> ${date.toLocaleDateString()}</p>
+                <p><strong>Time:</strong> ${date.toLocaleTimeString()}</p>
+                <ul>
+                    ${selectedItems.map(item => `<li>${item.item} - ${item.price} Sh</li>`).join('')}
+                </ul>
+                <strong>Total: ${total} Sh</strong>
+            `;
+            receipt.innerHTML = receiptContent;
+            receipt.style.display = 'block';
+        }
+
+        function resetSelection() {
+            selectedItems = [];
+            total = 0;
+            document.getElementById('itemList').innerHTML = '';
+            document.getElementById('total').textContent = '0';
+            document.getElementById('receipt').style.display = 'none';
+        }
+
+        function previousSelection() {
+            alert("Previous selection feature not implemented.");
+        }
+
+        function nextSelection() {
+            alert("Next selection feature not implemented.");
+        }
+
+        function printReceipt() {
+            const receipt = document.getElementById('receipt').innerHTML;
+            const newWin = window.open('', 'Print-Window');
+            newWin.document.open();
+            newWin.document.write(`<html><body>${receipt}</body></html>`);
+            newWin.document.close();
+            newWin.print();
+            newWin.close();
+        }
+    </script>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 Star Light Hotel. All rights reserved.</p>
+    </footer>
+</body>
+</html>
